@@ -33,5 +33,5 @@ decode =
         Model
         (Decode.at [ "count" ] Decode.int)
         (Decode.at [ "results" ] (Decode.list decodePokemon))
-        (Decode.maybe (Decode.at [ "previous" ] Decode.string))
-        (Decode.maybe (Decode.at [ "next" ] Decode.string))
+        (Decode.at [ "previous" ] (Decode.nullable Decode.string))
+        (Decode.at [ "next" ] (Decode.nullable Decode.string))
