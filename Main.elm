@@ -71,7 +71,7 @@ viewPokemon pokemon =
 view : Model -> Html.Html Msg
 view model =
     div []
-        [ h1 [] [ text "Pokelm" ]
+        [ h1 [] [ text "Pokelmon" ]
         , ul [] (List.map viewPokemon model.pokemons)
         ]
 
