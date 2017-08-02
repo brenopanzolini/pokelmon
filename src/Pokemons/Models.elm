@@ -1,4 +1,4 @@
-module App.Models exposing (..)
+module Pokemons.Models exposing (..)
 
 
 type alias Pokemon =
@@ -7,7 +7,7 @@ type alias Pokemon =
     }
 
 
-type alias Model =
+type alias ApiResponse =
     { total : Int
     , pokemons : List Pokemon
     , prevPage : Maybe String
