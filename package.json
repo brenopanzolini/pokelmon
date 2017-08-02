@@ -1,0 +1,13 @@
+{
+  "name": "pokelmon",
+  "description": "Elm project consuming PokéAPI",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "elm-reactor",
+    "build": "elm-make src/Main.elm --output public/built/index.js"
+  },
+  "main": "index.js",
+  "repository": "https://github.com/brenopanzolini/pokelmon.git",
+  "author": "Breno Panzolini <bpanzolini@gmail.com>",
+  "license": "MIT"
+}
