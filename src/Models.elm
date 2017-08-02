@@ -6,8 +6,7 @@ import Msg exposing (Msg(PokemonsMsg))
 
 
 type alias Model =
-    { showLoader : Bool
-    , pokemons : Pokemons.Models.ApiResponse
+    { pokemons : Pokemons.Models.Model
     }
 
 
@@ -15,15 +14,18 @@ init : ( Model, Cmd Msg )
 init =
     let
         pokemonsModel =
-            Pokemons.Models.ApiResponse
-                0
-                []
-                Nothing
-                Nothing
+            Pokemons.Models.Model
+                True
+                (Pokemons.Models.ApiResponse
+                    0
+                    []
+                    Nothing
+                    Nothing
+                )
 
         cmd =
             Cmd.map PokemonsMsg fetchPokemons
     in
-        ( Model True pokemonsModel
+        ( Model pokemonsModel
         , cmd
         )

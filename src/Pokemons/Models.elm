@@ -13,3 +13,9 @@ type alias ApiResponse =
     , prevPage : Maybe String
     , nextPage : Maybe String
     }
+
+
+type alias Model =
+    { isLoading : Bool
+    , api : ApiResponse
+    }

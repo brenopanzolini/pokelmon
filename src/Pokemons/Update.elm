@@ -1,17 +1,17 @@
 module Pokemons.Update exposing (..)
 
 import Pokemons.Msg exposing (Msg(..))
-import Pokemons.Models exposing (ApiResponse)
+import Pokemons.Models exposing (Model)
 
 
-update : Msg -> ApiResponse -> ( ApiResponse, Cmd Msg )
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         NoOp ->
             ( model, Cmd.none )
 
         FetchPokemons (Ok response) ->
-            ( response, Cmd.none )
+            ( { model | isLoading = False, api = response }, Cmd.none )
 
         FetchPokemons (Err _) ->
             ( model, Cmd.none )
