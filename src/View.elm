@@ -1,9 +1,8 @@
-module View exposing (..)
+module View exposing (view)
 
-import Html exposing (text)
+import Html
+import Types exposing (Model, Msg(PokemonsMsg))
 import Pokemons.View
-import Msg exposing (Msg(PokemonsMsg))
-import Models exposing (Model)
 
 
 view : Model -> Html.Html Msg

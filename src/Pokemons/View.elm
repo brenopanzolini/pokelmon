@@ -4,8 +4,7 @@ import Html exposing (a, div, h1, text, ul, li)
 import Html.Attributes exposing (href)
 import Html.Events exposing (onClick)
 import String.Extra exposing (toSentenceCase)
-import Pokemons.Msg exposing (Msg(..))
-import Pokemons.Models exposing (Pokemon, Model)
+import Pokemons.Types exposing (Pokemon, Model, Msg(..))
 
 
 pagination : Maybe String -> String -> Html.Html Msg

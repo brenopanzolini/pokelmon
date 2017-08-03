@@ -1,8 +1,10 @@
-module Pokemons.Update exposing (..)
+module Pokemons.State exposing (init, update)
 
-import Pokemons.Msg exposing (Msg(..))
-import Pokemons.Models exposing (Model)
-import Pokemons.Commands exposing (fetchPokemons)
+import Pokemons.Types exposing (Model, ApiResponse, Msg(..))
+import Pokemons.Rest exposing (fetchPokemons)
+
+
+-- UPDATE
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -19,3 +21,22 @@ update msg model =
 
         ChangePage pageUrl ->
             ( { model | isLoading = True }, fetchPokemons (Just pageUrl) )
+
+
+
+-- INIT
+
+
+init : ( Model, Cmd Msg )
+init =
+    let
+        api =
+            ApiResponse
+                0
+                []
+                Nothing
+                Nothing
+    in
+        ( Model True api
+        , fetchPokemons Nothing
+        )

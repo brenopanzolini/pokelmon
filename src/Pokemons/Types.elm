@@ -1,4 +1,12 @@
-module Pokemons.Models exposing (..)
+module Pokemons.Types exposing (..)
+
+import Http
+
+
+type Msg
+    = NoOp
+    | FetchPokemons (Result Http.Error ApiResponse)
+    | ChangePage String
 
 
 type alias Pokemon =

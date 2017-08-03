@@ -1,9 +1,8 @@
-module Pokemons.Commands exposing (..)
+module Pokemons.Rest exposing (..)
 
 import Http
 import Json.Decode as Decode exposing (Decoder)
-import Pokemons.Msg exposing (Msg(FetchPokemons))
-import Pokemons.Models exposing (Pokemon, ApiResponse)
+import Pokemons.Types exposing (Pokemon, ApiResponse, Msg(FetchPokemons))
 
 
 fetchPokemons : Maybe String -> Cmd Msg
