@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "elm-reactor",
-    "build": "elm-make src/Main.elm --output public/built/elm.js"
+    "build": "elm-make src/Main.elm --output dist/built/elm.js"
   },
   "main": "index.js",
   "repository": "https://github.com/brenopanzolini/pokelmon.git",
