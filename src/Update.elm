@@ -1,8 +1,8 @@
 module Update exposing (..)
 
 import Msg exposing (Msg(NoOp, PokemonsMsg))
-import Models exposing (Model)
 import Pokemons.Update
+import Models exposing (Model)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
