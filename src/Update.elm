@@ -1,6 +1,6 @@
 module Update exposing (..)
 
-import Msg exposing (Msg(..))
+import Msg exposing (Msg(NoOp, PokemonsMsg))
 import Models exposing (Model)
 import Pokemons.Update
 
@@ -16,4 +16,4 @@ update msg model =
                 ( newApiResponse, cmd ) =
                     Pokemons.Update.update subMsg model.pokemons
             in
-                ( { model | pokemons = newApiResponse }, Cmd.none )
+                ( { model | pokemons = newApiResponse }, Cmd.map PokemonsMsg cmd )

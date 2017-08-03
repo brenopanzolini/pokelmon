@@ -6,14 +6,11 @@ import Pokemons.Msg exposing (Msg(..))
 import Pokemons.Models exposing (Pokemon, ApiResponse)
 
 
-fetchPokemons : Cmd Msg
-fetchPokemons =
+fetchPokemons : Maybe String -> Cmd Msg
+fetchPokemons url =
     let
-        url =
-            "http://www.pokeapi.co/api/v2/pokemon"
-
         request =
-            Http.get url decoder
+            Http.get (Maybe.withDefault "http://www.pokeapi.co/api/v2/pokemon/" url) decoder
     in
         Http.send FetchPokemons request
 

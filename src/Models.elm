@@ -24,7 +24,7 @@ init =
                 )
 
         cmd =
-            Cmd.map PokemonsMsg fetchPokemons
+            Cmd.map PokemonsMsg (fetchPokemons Nothing)
     in
         ( Model pokemonsModel
         , cmd

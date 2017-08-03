@@ -1,23 +1,40 @@
 module Pokemons.View exposing (..)
 
 import Html exposing (a, div, h1, text, ul, li)
+import Html.Attributes exposing (href)
+import Html.Events exposing (onClick)
 import String.Extra exposing (toSentenceCase)
 import Pokemons.Msg exposing (Msg(..))
 import Pokemons.Models exposing (..)
 
 
-pokemonView : Pokemon -> Html.Html Msg
-pokemonView model =
+pagination : Maybe String -> String -> Html.Html Msg
+pagination url linkText =
+    case url of
+        Just url ->
+            a [ onClick (ChangePage url), href "#" ] [ text linkText ]
+
+        Nothing ->
+            a [] [ text linkText ]
+
+
+item : Pokemon -> Html.Html Msg
+item model =
     li []
         [ model.name |> toSentenceCase |> text ]
 
 
-listView : Model -> Html.Html Msg
-listView model =
+list : Model -> Html.Html Msg
+list model =
     if model.isLoading then
         text "Loading..."
     else
-        ul [] (List.map pokemonView model.api.pokemons)
+        div []
+            [ ul [] (List.map item model.api.pokemons)
+            , pagination model.api.prevPage "Previous"
+            , text "  |  "
+            , pagination model.api.nextPage "Next"
+            ]
 
 
 view : Model -> Html.Html Msg
@@ -28,5 +45,5 @@ view model =
     in
         div []
             [ h1 [] [ text "Pokémons" ]
-            , listView model
+            , list model
             ]
