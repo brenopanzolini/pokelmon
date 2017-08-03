@@ -1,11 +1,11 @@
-module Pokemons.View exposing (..)
+module Pokemons.View exposing (view)
 
 import Html exposing (a, div, h1, text, ul, li)
 import Html.Attributes exposing (href)
 import Html.Events exposing (onClick)
 import String.Extra exposing (toSentenceCase)
 import Pokemons.Msg exposing (Msg(..))
-import Pokemons.Models exposing (..)
+import Pokemons.Models exposing (Pokemon, Model)
 
 
 pagination : Maybe String -> String -> Html.Html Msg

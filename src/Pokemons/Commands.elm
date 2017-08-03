@@ -2,7 +2,7 @@ module Pokemons.Commands exposing (..)
 
 import Http
 import Json.Decode as Decode exposing (Decoder)
-import Pokemons.Msg exposing (Msg(..))
+import Pokemons.Msg exposing (Msg(FetchPokemons))
 import Pokemons.Models exposing (Pokemon, ApiResponse)
 
 
