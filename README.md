@@ -35,4 +35,4 @@ You can build the project by running:
 $ yarn build
 ```
 
-This will generate the compiled files in *public/built* folder.
+This will generate the compiled files in *dist/built* folder.
