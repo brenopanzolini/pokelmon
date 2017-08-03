@@ -2,6 +2,10 @@
 
 ![Pokelmon](http://i.imgur.com/JPNfcv3.png)
 
+Simple Elm project consuming [PokéAPI](https://pokeapi.co/).
+
+[Demo](http://pokelmon.surge.sh/).
+
 ## Getting Started
 
 Assuming you already have Elm installed (otherwise check the [official install guide](http://elm-lang.org/install)).
