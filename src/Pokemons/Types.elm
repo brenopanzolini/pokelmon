@@ -30,6 +30,7 @@ type alias PokemonDetail =
     , frontImage : String
     , backImage : String
     , types : List String
+    , isLoading : Bool
     }
 
 

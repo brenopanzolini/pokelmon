@@ -23,7 +23,7 @@ update msg model =
             ( { model | isLoading = True }, fetchPokemons (Just pageUrl) )
 
         LoadDetails url ->
-            ( { model | pokemonDetail = (PokemonDetail "" "" "" []) }, fetchPokemonDetails url )
+            ( { model | pokemonDetail = (PokemonDetail "" "" "" [] True) }, fetchPokemonDetails url )
 
         FetchPokemonDetails (Ok response) ->
             ( { model | pokemonDetail = response }, Cmd.none )
@@ -46,6 +46,6 @@ init =
                 Nothing
                 Nothing
     in
-        ( Model True api (PokemonDetail "" "" "" [])
+        ( Model True api (PokemonDetail "" "" "" [] False)
         , fetchPokemons Nothing
         )

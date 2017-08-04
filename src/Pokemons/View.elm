@@ -3,7 +3,7 @@ module Pokemons.View exposing (view)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
-import String.Extra exposing (toSentenceCase)
+import String.Extra exposing (toSentenceCase, nonEmpty)
 import Pokemons.Types exposing (Pokemon, PokemonDetail, ApiResponse, Model, Msg(..))
 
 
@@ -62,28 +62,57 @@ list model =
             ]
 
 
-typeText : String -> Html.Html Msg
-typeText pokeType =
-    li [ class "list-group-item" ]
-        [ (pokeType) |> toSentenceCase |> text
-        ]
+pluralize : Int -> String -> String
+pluralize qtd name =
+    if qtd == 1 then
+        name
+    else
+        name ++ "s"
+
+
+pokeType : List String -> Html.Html Msg
+pokeType types =
+    let
+        count =
+            List.length types
+
+        title =
+            (pluralize count "Type") ++ ": "
+
+        tiposFinais =
+            String.join ", " types
+    in
+        h6 [ class "card-subtitle mb-2 text-muted" ]
+            [ text title
+            , text tiposFinais
+            ]
 
 
 detail : PokemonDetail -> Html.Html Msg
 detail model =
-    let
-        d =
-            ""
-    in
-        div [ class "card" ]
-            [ div [ class "card-header" ] [ text "Details" ]
-            , div [ class "card-block" ]
-                [ h4 [ class "card-title" ] [ model.name |> toSentenceCase |> text ]
-                , ul [ class "list-group" ] (List.map typeText model.types)
-                , div [ style [ ( "text-align", "center" ) ] ]
-                    [ img [ src model.frontImage ] []
-                    , img [ src model.backImage ] []
-                    ]
+    div [ class "card" ]
+        [ div [ class "card-header" ] [ text "Details" ]
+        , detailContent model
+        ]
+
+
+detailContent : PokemonDetail -> Html.Html Msg
+detailContent model =
+    if model.isLoading then
+        div [ class "card-block", style [ ( "text-align", "center" ) ] ]
+            [ img [ width 80, src "images/ajax-loader.gif" ] []
+            ]
+    else if not model.isLoading && String.isEmpty model.name then
+        div [ class "card-block", style [ ( "text-align", "center" ) ] ]
+            [ span [] [ text "Select a Pokémon to view details..." ]
+            ]
+    else
+        div [ class "card-block" ]
+            [ h4 [ class "card-title" ] [ model.name |> toSentenceCase |> text ]
+            , pokeType model.types
+            , div [ style [ ( "text-align", "center" ) ] ]
+                [ img [ src model.frontImage ] []
+                , img [ src model.backImage ] []
                 ]
             ]
 

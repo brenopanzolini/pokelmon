@@ -34,12 +34,13 @@ typeDecoder =
 
 detailDecoder : Decoder PokemonDetail
 detailDecoder =
-    Decode.map4
+    Decode.map5
         PokemonDetail
         (Decode.at [ "name" ] Decode.string)
         (Decode.at [ "sprites", "front_default" ] Decode.string)
         (Decode.at [ "sprites", "back_default" ] Decode.string)
         (Decode.at [ "types" ] (Decode.list typeDecoder))
+        (Decode.succeed False)
 
 
 pokemonDecoder : Decoder Pokemon
