@@ -31,8 +31,8 @@ pagination model =
         ]
 
 
-item : Pokemon -> Html.Html Msg
-item model =
+pokemon : Pokemon -> Html.Html Msg
+pokemon model =
     tr []
         [ td []
             [ a [ onClick (LoadDetail model.url), href "#" ]
@@ -53,46 +53,20 @@ pokemons model =
             [ table [ class "table table-hover table-sm" ]
                 [ thead []
                     [ tr []
-                        [ th [] [ "Name" |> text ]
+                        [ th [] [ text "Name" ]
                         ]
                     ]
-                , tbody [] (List.map item model.api.list)
+                , tbody [] (List.map pokemon model.api.list)
                 ]
             , pagination model.api
             ]
 
 
-pluralize : Int -> String -> String
-pluralize qtd name =
-    if qtd == 1 then
-        name
-    else
-        name ++ "s"
-
-
-pokeType : List String -> Html.Html Msg
-pokeType types =
-    let
-        count =
-            List.length types
-
-        title =
-            (pluralize count "Type") ++ ": "
-
-        tiposFinais =
-            String.join ", " types
-    in
-        h6 [ class "card-subtitle mb-2 text-muted" ]
-            [ text title
-            , text tiposFinais
-            ]
-
-
-detail : Detail -> Html.Html Msg
-detail model =
-    div [ class "card" ]
-        [ div [ class "card-header" ] [ text "Details" ]
-        , detailContent model
+types : List String -> Html.Html Msg
+types model =
+    h6 [ class "card-subtitle mb-2 text-muted" ]
+        [ (text "Type: ")
+        , text (String.join ", " model)
         ]
 
 
@@ -102,19 +76,27 @@ detailContent model =
         div [ class "card-block", style [ ( "text-align", "center" ) ] ]
             [ img [ width 80, src "images/ajax-loader.gif" ] []
             ]
-    else if not model.isLoading && String.isEmpty model.api.name then
+    else if String.isEmpty model.api.name then
         div [ class "card-block", style [ ( "text-align", "center" ) ] ]
             [ span [] [ text "Select a Pokémon to view details..." ]
             ]
     else
         div [ class "card-block" ]
             [ h4 [ class "card-title" ] [ model.api.name |> toSentenceCase |> text ]
-            , pokeType model.api.types
+            , types model.api.types
             , div [ style [ ( "text-align", "center" ) ] ]
                 [ img [ src model.api.frontImage ] []
                 , img [ src model.api.backImage ] []
                 ]
             ]
+
+
+detail : Detail -> Html.Html Msg
+detail model =
+    div [ class "card" ]
+        [ div [ class "card-header" ] [ text "Details" ]
+        , detailContent model
+        ]
 
 
 view : Model -> Html.Html Msg
