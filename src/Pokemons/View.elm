@@ -47,20 +47,16 @@ list model =
     if model.isLoading then
         text "Loading..."
     else
-        div [ class "row" ]
-            [ div [ class "col-md-6" ]
-                [ table [ class "table table-hover table-sm" ]
-                    [ thead []
-                        [ tr []
-                            [ th [] [ "Name" |> text ]
-                            ]
+        div []
+            [ table [ class "table table-hover table-sm" ]
+                [ thead []
+                    [ tr []
+                        [ th [] [ "Name" |> text ]
                         ]
-                    , tbody [] (List.map item model.api.pokemons)
                     ]
-                , pagination model.api
+                , tbody [] (List.map item model.api.pokemons)
                 ]
-            , div [ class "col-md-6" ]
-                [ detail model.pokemonDetail ]
+            , pagination model.api
             ]
 
 
@@ -90,6 +86,16 @@ detail model =
             ]
 
 
+viewFinal : Model -> Html.Html Msg
+viewFinal model =
+    div [ class "row" ]
+        [ div [ class "col-md-6" ]
+            [ list model ]
+        , div [ class "col-md-6" ]
+            [ detail model.pokemonDetail ]
+        ]
+
+
 view : Model -> Html.Html Msg
 view model =
-    list model
+    viewFinal model
