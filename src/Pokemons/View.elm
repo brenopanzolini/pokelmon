@@ -62,14 +62,6 @@ pokemons model =
             ]
 
 
-types : List String -> Html.Html Msg
-types model =
-    h6 [ class "card-subtitle mb-2 text-muted" ]
-        [ (text "Type: ")
-        , text (String.join ", " model)
-        ]
-
-
 detailContent : Detail -> Html.Html Msg
 detailContent model =
     if model.isLoading then
@@ -83,7 +75,10 @@ detailContent model =
     else
         div [ class "card-block" ]
             [ h4 [ class "card-title" ] [ model.api.name |> toSentenceCase |> text ]
-            , types model.api.types
+            , h6 [ class "card-subtitle mb-2 text-muted" ]
+                [ (text "Type: ")
+                , text (String.join ", " model.api.types)
+                ]
             , div [ style [ ( "text-align", "center" ) ] ]
                 [ img [ src model.api.frontImage ] []
                 , img [ src model.api.backImage ] []
