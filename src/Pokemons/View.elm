@@ -45,7 +45,9 @@ item model =
 list : Model -> Html.Html Msg
 list model =
     if model.isLoading then
-        text "Loading..."
+        div [ style [ ( "text-align", "center" ) ] ]
+            [ img [ width 80, src "images/ajax-loader.gif" ] []
+            ]
     else
         div []
             [ table [ class "table table-hover table-sm" ]
