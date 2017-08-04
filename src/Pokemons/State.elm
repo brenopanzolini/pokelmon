@@ -1,7 +1,7 @@
 module Pokemons.State exposing (init, update)
 
-import Pokemons.Types exposing (Model, PokemonDetail, ApiResponse, Msg(..))
-import Pokemons.Rest exposing (fetchPokemons, fetchPokemonDetails)
+import Pokemons.Types exposing (..)
+import Pokemons.Rest exposing (fetchPokemons, fetchDetail)
 
 
 -- UPDATE
@@ -14,22 +14,46 @@ update msg model =
             ( model, Cmd.none )
 
         FetchPokemons (Ok response) ->
-            ( { model | isLoading = False, api = response }, Cmd.none )
+            let
+                newPokemons =
+                    (Pokemons False response)
+            in
+                ( { model | pokemons = newPokemons }, Cmd.none )
 
         FetchPokemons (Err _) ->
-            ( { model | isLoading = False }, Cmd.none )
+            let
+                newPokemons =
+                    (Pokemons False model.pokemons.api)
+            in
+                ( { model | pokemons = newPokemons }, Cmd.none )
 
-        ChangePage pageUrl ->
-            ( { model | isLoading = True }, fetchPokemons (Just pageUrl) )
+        ChangePage url ->
+            let
+                newPokemons =
+                    (Pokemons True model.pokemons.api)
+            in
+                ( { model | pokemons = newPokemons }, fetchPokemons (Just url) )
 
-        LoadDetails url ->
-            ( { model | pokemonDetail = (PokemonDetail "" "" "" [] True) }, fetchPokemonDetails url )
+        LoadDetail url ->
+            let
+                newDetail =
+                    (Detail True model.detail.api)
+            in
+                ( { model | detail = newDetail }, fetchDetail url )
 
-        FetchPokemonDetails (Ok response) ->
-            ( { model | pokemonDetail = response }, Cmd.none )
+        FetchDetail (Ok response) ->
+            let
+                newDetail =
+                    (Detail False response)
+            in
+                ( { model | detail = newDetail }, Cmd.none )
 
-        FetchPokemonDetails (Err _) ->
-            ( model, Cmd.none )
+        FetchDetail (Err _) ->
+            let
+                newDetail =
+                    (Detail False model.detail.api)
+            in
+                ( { model | detail = newDetail }, Cmd.none )
 
 
 
@@ -39,13 +63,16 @@ update msg model =
 init : ( Model, Cmd Msg )
 init =
     let
-        api =
-            ApiResponse
-                0
-                []
-                Nothing
-                Nothing
+        pokemons =
+            Pokemons
+                True
+                (ApiPokemons 0 [] Nothing Nothing)
+
+        detail =
+            Detail
+                False
+                (ApiDetail "" [] "" "")
     in
-        ( Model True api (PokemonDetail "" "" "" [] False)
+        ( Model pokemons detail
         , fetchPokemons Nothing
         )

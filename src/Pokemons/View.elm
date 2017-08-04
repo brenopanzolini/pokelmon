@@ -4,7 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import String.Extra exposing (toSentenceCase, nonEmpty)
-import Pokemons.Types exposing (Pokemon, PokemonDetail, ApiResponse, Model, Msg(..))
+import Pokemons.Types exposing (..)
 
 
 pageItem : Maybe String -> String -> Html.Html Msg
@@ -21,7 +21,7 @@ pageItem url linkText =
                 ]
 
 
-pagination : ApiResponse -> Html.Html Msg
+pagination : ApiPokemons -> Html.Html Msg
 pagination model =
     nav []
         [ ul [ class "pagination justify-content-center" ]
@@ -35,15 +35,15 @@ item : Pokemon -> Html.Html Msg
 item model =
     tr []
         [ td []
-            [ a [ onClick (LoadDetails model.url), href "#" ]
+            [ a [ onClick (LoadDetail model.url), href "#" ]
                 [ model.name |> toSentenceCase |> text
                 ]
             ]
         ]
 
 
-list : Model -> Html.Html Msg
-list model =
+pokemons : Pokemons -> Html.Html Msg
+pokemons model =
     if model.isLoading then
         div [ style [ ( "text-align", "center" ) ] ]
             [ img [ width 80, src "images/ajax-loader.gif" ] []
@@ -56,7 +56,7 @@ list model =
                         [ th [] [ "Name" |> text ]
                         ]
                     ]
-                , tbody [] (List.map item model.api.pokemons)
+                , tbody [] (List.map item model.api.list)
                 ]
             , pagination model.api
             ]
@@ -88,7 +88,7 @@ pokeType types =
             ]
 
 
-detail : PokemonDetail -> Html.Html Msg
+detail : Detail -> Html.Html Msg
 detail model =
     div [ class "card" ]
         [ div [ class "card-header" ] [ text "Details" ]
@@ -96,37 +96,32 @@ detail model =
         ]
 
 
-detailContent : PokemonDetail -> Html.Html Msg
+detailContent : Detail -> Html.Html Msg
 detailContent model =
     if model.isLoading then
         div [ class "card-block", style [ ( "text-align", "center" ) ] ]
             [ img [ width 80, src "images/ajax-loader.gif" ] []
             ]
-    else if not model.isLoading && String.isEmpty model.name then
+    else if not model.isLoading && String.isEmpty model.api.name then
         div [ class "card-block", style [ ( "text-align", "center" ) ] ]
             [ span [] [ text "Select a Pokémon to view details..." ]
             ]
     else
         div [ class "card-block" ]
-            [ h4 [ class "card-title" ] [ model.name |> toSentenceCase |> text ]
-            , pokeType model.types
+            [ h4 [ class "card-title" ] [ model.api.name |> toSentenceCase |> text ]
+            , pokeType model.api.types
             , div [ style [ ( "text-align", "center" ) ] ]
-                [ img [ src model.frontImage ] []
-                , img [ src model.backImage ] []
+                [ img [ src model.api.frontImage ] []
+                , img [ src model.api.backImage ] []
                 ]
             ]
 
 
-viewFinal : Model -> Html.Html Msg
-viewFinal model =
-    div [ class "row" ]
-        [ div [ class "col-md-6" ]
-            [ list model ]
-        , div [ class "col-md-6" ]
-            [ detail model.pokemonDetail ]
-        ]
-
-
 view : Model -> Html.Html Msg
 view model =
-    viewFinal model
+    div [ class "row" ]
+        [ div [ class "col-md-6" ]
+            [ pokemons model.pokemons ]
+        , div [ class "col-md-6" ]
+            [ detail model.detail ]
+        ]
