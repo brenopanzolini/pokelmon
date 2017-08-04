@@ -6,6 +6,8 @@ import Http
 type Msg
     = NoOp
     | FetchPokemons (Result Http.Error ApiResponse)
+    | FetchPokemonDetails (Result Http.Error PokemonDetail)
+    | LoadDetails String
     | ChangePage String
 
 
@@ -23,7 +25,16 @@ type alias ApiResponse =
     }
 
 
+type alias PokemonDetail =
+    { name : String
+    , frontImage : String
+    , backImage : String
+    , types : List String
+    }
+
+
 type alias Model =
     { isLoading : Bool
     , api : ApiResponse
+    , pokemonDetail : PokemonDetail
     }

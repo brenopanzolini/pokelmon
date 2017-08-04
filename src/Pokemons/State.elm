@@ -1,7 +1,7 @@
 module Pokemons.State exposing (init, update)
 
-import Pokemons.Types exposing (Model, ApiResponse, Msg(..))
-import Pokemons.Rest exposing (fetchPokemons)
+import Pokemons.Types exposing (Model, PokemonDetail, ApiResponse, Msg(..))
+import Pokemons.Rest exposing (fetchPokemons, fetchPokemonDetails)
 
 
 -- UPDATE
@@ -22,6 +22,15 @@ update msg model =
         ChangePage pageUrl ->
             ( { model | isLoading = True }, fetchPokemons (Just pageUrl) )
 
+        LoadDetails url ->
+            ( { model | pokemonDetail = (PokemonDetail "" "" "" []) }, fetchPokemonDetails url )
+
+        FetchPokemonDetails (Ok response) ->
+            ( { model | pokemonDetail = response }, Cmd.none )
+
+        FetchPokemonDetails (Err _) ->
+            ( model, Cmd.none )
+
 
 
 -- INIT
@@ -37,6 +46,6 @@ init =
                 Nothing
                 Nothing
     in
-        ( Model True api
+        ( Model True api (PokemonDetail "" "" "" [])
         , fetchPokemons Nothing
         )

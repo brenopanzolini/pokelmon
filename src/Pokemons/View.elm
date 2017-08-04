@@ -1,10 +1,10 @@
 module Pokemons.View exposing (view)
 
-import Html exposing (a, div, h1, text, nav, ul, li, table, thead, tbody, tr, th, td)
-import Html.Attributes exposing (class, href)
+import Html exposing (..)
+import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import String.Extra exposing (toSentenceCase)
-import Pokemons.Types exposing (Pokemon, ApiResponse, Model, Msg(..))
+import Pokemons.Types exposing (Pokemon, PokemonDetail, ApiResponse, Model, Msg(..))
 
 
 pageItem : Maybe String -> String -> Html.Html Msg
@@ -34,7 +34,11 @@ pagination model =
 item : Pokemon -> Html.Html Msg
 item model =
     tr []
-        [ td [] [ model.name |> toSentenceCase |> text ]
+        [ td []
+            [ a [ onClick (LoadDetails model.url), href "#" ]
+                [ model.name |> toSentenceCase |> text
+                ]
+            ]
         ]
 
 
@@ -43,16 +47,46 @@ list model =
     if model.isLoading then
         text "Loading..."
     else
-        div []
-            [ table [ class "table table-sm" ]
-                [ thead []
-                    [ tr []
-                        [ th [] [ "Name" |> text ]
+        div [ class "row" ]
+            [ div [ class "col-md-6" ]
+                [ table [ class "table table-hover table-sm" ]
+                    [ thead []
+                        [ tr []
+                            [ th [] [ "Name" |> text ]
+                            ]
                         ]
+                    , tbody [] (List.map item model.api.pokemons)
                     ]
-                , tbody [] (List.map item model.api.pokemons)
+                , pagination model.api
                 ]
-            , pagination model.api
+            , div [ class "col-md-6" ]
+                [ detail model.pokemonDetail ]
+            ]
+
+
+typeText : String -> Html.Html Msg
+typeText pokeType =
+    li [ class "list-group-item" ]
+        [ (pokeType) |> toSentenceCase |> text
+        ]
+
+
+detail : PokemonDetail -> Html.Html Msg
+detail model =
+    let
+        d =
+            ""
+    in
+        div [ class "card" ]
+            [ div [ class "card-header" ] [ text "Details" ]
+            , div [ class "card-block" ]
+                [ h4 [ class "card-title" ] [ model.name |> toSentenceCase |> text ]
+                , ul [ class "list-group" ] (List.map typeText model.types)
+                , div [ style [ ( "text-align", "center" ) ] ]
+                    [ img [ src model.frontImage ] []
+                    , img [ src model.backImage ] []
+                    ]
+                ]
             ]
 
 
