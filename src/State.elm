@@ -15,10 +15,10 @@ update msg model =
 
         PokemonsMsg subMsg ->
             let
-                ( newApiResponse, cmd ) =
+                ( newPokemons, cmd ) =
                     Pokemons.State.update subMsg model.pokemons
             in
-                ( { model | pokemons = newApiResponse }, Cmd.map PokemonsMsg cmd )
+                ( { model | pokemons = newPokemons }, Cmd.map PokemonsMsg cmd )
 
 
 
