@@ -11,49 +11,49 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         NoOp ->
-            ( model, Cmd.none )
+            model ! []
 
         FetchPokemons (Ok response) ->
             let
                 newPokemons =
                     (Pokemons False response)
             in
-                ( { model | pokemons = newPokemons }, Cmd.none )
+                { model | pokemons = newPokemons } ! []
 
         FetchPokemons (Err _) ->
             let
                 newPokemons =
                     (Pokemons False model.pokemons.api)
             in
-                ( { model | pokemons = newPokemons }, Cmd.none )
+                { model | pokemons = newPokemons } ! []
 
         ChangePage url ->
             let
                 newPokemons =
                     (Pokemons True model.pokemons.api)
             in
-                ( { model | pokemons = newPokemons }, fetchPokemons (Just url) )
+                { model | pokemons = newPokemons } ! [ fetchPokemons (Just url) ]
 
         LoadDetail url ->
             let
                 newDetail =
                     (Detail True model.detail.api)
             in
-                ( { model | detail = newDetail }, fetchDetail url )
+                { model | detail = newDetail } ! [ fetchDetail url ]
 
         FetchDetail (Ok response) ->
             let
                 newDetail =
                     (Detail False response)
             in
-                ( { model | detail = newDetail }, Cmd.none )
+                { model | detail = newDetail } ! []
 
         FetchDetail (Err _) ->
             let
                 newDetail =
                     (Detail False model.detail.api)
             in
-                ( { model | detail = newDetail }, Cmd.none )
+                { model | detail = newDetail } ! []
 
 
 
