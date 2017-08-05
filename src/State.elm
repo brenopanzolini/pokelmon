@@ -11,14 +11,14 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         NoOp ->
-            ( model, Cmd.none )
+            model ! []
 
         PokemonsMsg subMsg ->
             let
                 ( newPokemons, cmd ) =
                     Pokemons.State.update subMsg model.pokemons
             in
-                ( { model | pokemons = newPokemons }, Cmd.map PokemonsMsg cmd )
+                { model | pokemons = newPokemons } ! [ Cmd.map PokemonsMsg cmd ]
 
 
 
@@ -30,7 +30,10 @@ init =
     let
         ( pokemonsModel, pokemonsCmd ) =
             Pokemons.State.init
+
+        cmds =
+            Cmd.batch [ Cmd.map PokemonsMsg pokemonsCmd ]
     in
         ( Model pokemonsModel
-        , Cmd.map PokemonsMsg pokemonsCmd
+        , cmds
         )
