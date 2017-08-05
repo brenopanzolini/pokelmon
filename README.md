@@ -18,7 +18,7 @@ $ cd pokelmon
 Then install dependencies:
 
 ```sh
-$ elm-packages install
+$ elm-package install
 ```
 
 ## Running the Project
