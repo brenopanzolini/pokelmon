@@ -3,6 +3,9 @@ module Pokemons.Types exposing (..)
 import Http
 
 
+-- MSG
+
+
 type Msg
     = NoOp
     | FetchPokemons (Result Http.Error ApiPokemons)
@@ -11,17 +14,13 @@ type Msg
     | ChangePage String
 
 
-type alias Pokemon =
-    { name : String
-    , url : String
-    }
+
+--  MODELS
 
 
-type alias ApiPokemons =
-    { total : Int
-    , list : List Pokemon
-    , prevPage : Maybe String
-    , nextPage : Maybe String
+type alias Model =
+    { pokemons : Pokemons
+    , detail : Detail
     }
 
 
@@ -31,11 +30,17 @@ type alias Pokemons =
     }
 
 
-type alias ApiDetail =
+type alias ApiPokemons =
+    { total : Int
+    , results : List Pokemon
+    , prevPage : Maybe String
+    , nextPage : Maybe String
+    }
+
+
+type alias Pokemon =
     { name : String
-    , types : List String
-    , frontImage : String
-    , backImage : String
+    , url : String
     }
 
 
@@ -45,7 +50,9 @@ type alias Detail =
     }
 
 
-type alias Model =
-    { pokemons : Pokemons
-    , detail : Detail
+type alias ApiDetail =
+    { name : String
+    , types : List String
+    , frontImage : String
+    , backImage : String
     }

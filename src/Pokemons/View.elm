@@ -56,7 +56,7 @@ pokemons model =
                         [ th [] [ text "Name" ]
                         ]
                     ]
-                , tbody [] (List.map pokemon model.api.list)
+                , tbody [] (List.map pokemon model.api.results)
                 ]
             , pagination model.api
             ]
