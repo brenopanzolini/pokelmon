@@ -1,0 +1,14 @@
+language: elm
+
+elm:
+  - "0.18.0"
+  
+node_js: '8'
+
+script:
+  - elm-package install
+
+deploy:
+  provider: surge
+  project: ./dist/
+  domain: pokelmon.surge.sh
