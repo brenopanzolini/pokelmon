@@ -1,4 +1,4 @@
-# Pokelmon [![Build Status](https://travis-ci.org/brenopanzolini/pokelmin.svg?branch=master)](https://travis-ci.org/brenopanzolini/pokelmon)
+# Pokelmon [![Build Status](https://travis-ci.org/brenopanzolini/pokelmon.svg?branch=master)](https://travis-ci.org/brenopanzolini/pokelmon)
 
 ![Pokelmon](http://i.imgur.com/JPNfcv3.png)
 
