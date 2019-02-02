@@ -10,9 +10,8 @@ Simple Elm project consuming [PokéAPI](https://pokeapi.co/).
 
 Elm version: 0.18
 
-Assuming you already have Elm installed (otherwise check the [official install guide](http://elm-lang.org/install)).
-
-Run elm in docker: `alias elm='docker run -it --rm -v "$(pwd):/code" -w "/code" -e "HOME=/tmp" -u $UID:$GID -p 8000:8000 codesimple/elm:0.18'`
+- Assuming you already have Elm installed (otherwise check the [official install guide](http://elm-lang.org/install)).
+- To run elm in Docker: `alias elm='docker run -it --rm -v "$(pwd):/code" -w "/code" -e "HOME=/tmp" -u $UID:$GID -p 8000:8000 codesimple/elm:0.18'`
 
 ```sh
 $ git clone https://github.com/brenopanzolini/pokelmon.git
