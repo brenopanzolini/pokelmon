@@ -6,7 +6,8 @@ elm:
 node_js: '8'
 
 script:
-  - elm-package install
+  - elm-package install --yes
+  - npm run build
 
 deploy:
   provider: surge
