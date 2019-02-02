@@ -11,5 +11,5 @@ script:
 
 deploy:
   provider: surge
-  project: ./dist/
+  project: ./dist
   domain: pokelmon.surge.sh
