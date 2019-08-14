@@ -9,7 +9,7 @@ fetchPokemons : Maybe String -> Cmd Msg
 fetchPokemons url =
     let
         request =
-            Http.get (Maybe.withDefault "http://pokeapi.salestock.net/api/v2/pokemon/?limit=10/" url) pokemonsDecoder
+            Http.get (Maybe.withDefault "https://www.pokeapi.co/api/v2/pokemon?limit=10" url) pokemonsDecoder
     in
         Http.send FetchPokemons request
 
